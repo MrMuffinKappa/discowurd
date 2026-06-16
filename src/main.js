@@ -8,6 +8,12 @@ import {
 import { burstConfetti } from './confetti.js';
 import { GLITCH_LEVELS, glitchText } from './glitch.js';
 import { isMultiquoteContinuation, prepareTextForDiscord } from './discord.js';
+import {
+  getFormatButtonContent,
+  getGlitchButtonContent,
+  replaceButtonSvg,
+  useCustomIcons,
+} from './icons.js';
 
 const FORMATS = [
   { id: 'bold', label: 'B', prefix: '**', suffix: '**', group: 'inline' },
@@ -144,12 +150,12 @@ function createFormatButton(fmt, compact = false) {
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'btn-format';
+  if (useCustomIcons && fmt.id) {
+    btn.classList.add('btn-format--icon');
+  }
   btn.title = getFormatTitle(fmt.id);
   btn.dataset.formatId = fmt.id;
-  btn.innerHTML = fmt.label;
-  if (!compact && fmt.label.length <= 3) {
-    btn.innerHTML = `<span>${fmt.label}</span>`;
-  }
+  btn.innerHTML = getFormatButtonContent(fmt);
   btn.addEventListener('click', (e) => {
     e.preventDefault();
     applyFormat(fmt.id);
@@ -201,8 +207,9 @@ function buildToolbar() {
   const glitchToolbarBtn = document.createElement('button');
   glitchToolbarBtn.type = 'button';
   glitchToolbarBtn.className = 'btn-format';
+  if (useCustomIcons) glitchToolbarBtn.classList.add('btn-format--icon');
   glitchToolbarBtn.title = getFormatTitle('glitch');
-  glitchToolbarBtn.innerHTML = '⚡';
+  glitchToolbarBtn.innerHTML = getGlitchButtonContent();
   glitchToolbarBtn.addEventListener('click', () => openGlitchModal());
   glitchGroup.appendChild(glitchToolbarBtn);
   toolbar.appendChild(glitchGroup);
@@ -212,8 +219,9 @@ function createGlitchPopupButton() {
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'btn-format';
+  if (useCustomIcons) btn.classList.add('btn-format--icon');
   btn.title = getFormatTitle('glitch');
-  btn.innerHTML = '⚡';
+  btn.innerHTML = getGlitchButtonContent();
   btn.addEventListener('click', (e) => {
     e.preventDefault();
     openGlitchModal(true);
@@ -911,6 +919,10 @@ function initEvents() {
 async function init() {
   applyTranslations();
   initLanguageSelector(langSelectorWrap, onLanguageChange);
+  if (useCustomIcons) {
+    replaceButtonSvg(glitchBtn, 'glitch');
+    replaceButtonSvg(emojiPickerBtn, 'emoji');
+  }
   rebuildFormatControls();
   initEvents();
   initGlitchModal();
