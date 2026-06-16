@@ -2,6 +2,8 @@
 
 **Disc**ord text formatter with a little **OwU** — a free, open-source web app for writing and previewing Discord markdown.
 
+**Vibe coded by** Mr.Muffin
+
 **Live demo:** [mrmuffinkappa.github.io/discowurd](https://mrmuffinkappa.github.io/discowurd/)
 
 ![discOwUrd](src/favicon_discOwUrd/favicon.svg)
@@ -26,7 +28,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Open [http://localhost:PORT](http://localhost:5173) in your browser.
 
 ## Build
 
@@ -50,21 +52,6 @@ Emojis are stored in your browser only (IndexedDB); they are not uploaded to any
 - [Vite](https://vitejs.dev/) — build tool
 - Vanilla HTML, CSS, JavaScript — no framework
 - IndexedDB — local emoji storage
-
-## Deploy to GitHub Pages
-
-On every push to `main`, GitHub Actions builds the app and publishes the `dist/` folder to the `gh-pages` branch.
-
-**One-time setup:**
-
-1. Open **Settings → Pages**
-2. Under **Build and deployment → Source**, choose **Deploy from a branch**
-3. Set **Branch** to `gh-pages` and folder to `/ (root)`
-4. Save — the site will be live at `https://<username>.github.io/discowurd/`
-
-If the page looks unstyled, the Pages source is likely pointing at `main` instead of `gh-pages`. Switch it as above and wait ~1 minute.
-
-The production build uses `base: '/discowurd/'` for project-page hosting.
 
 ## Contributing
 
