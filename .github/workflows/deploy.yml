@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
   workflow_dispatch:
 
 permissions:
@@ -37,12 +39,14 @@ jobs:
           grep -q '/discowurd/assets/' dist/index.html
           ! grep -q '/src/styles.css' dist/index.html
 
-      - name: Add .nojekyll
-        run: touch dist/.nojekyll
+      - name: Copy build to docs
+        run: |
+          rm -rf docs
+          cp -r dist docs
+          touch docs/.nojekyll
 
-      - name: Deploy to gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Commit docs folder
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          folder: dist
-          branch: gh-pages
-          single-commit: true
+          commit_message: 'deploy: update GitHub Pages build'
+          file_pattern: docs/**

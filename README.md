@@ -53,6 +53,14 @@ Emojis are stored in your browser only (IndexedDB); they are not uploaded to any
 - Vanilla HTML, CSS, JavaScript — no framework
 - IndexedDB — local emoji storage
 
+## Deploy to GitHub Pages
+
+Every push to `main` builds the app and updates the `docs/` folder (via GitHub Actions).
+
+**Pages settings:** Source = **Deploy from a branch** → Branch **`main`** → Folder **`/docs`** (not `/root`).
+
+Live at [mrmuffinkappa.github.io/discowurd](https://mrmuffinkappa.github.io/discowurd/)
+
 ## Contributing
 
 Issues and pull requests are welcome on [GitHub](https://github.com/MrMuffinKappa/discowurd).
