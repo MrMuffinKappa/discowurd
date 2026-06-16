@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>OwU</title>
+    <link rel="icon" href="/discowurd/assets/favicon-C0Svzzlt.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/discowurd/assets/site-WyiiqpV0.webmanifest" />
+    <meta name="theme-color" content="#bd58f2" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="/discowurd/assets/index-L5jJEC80.js"></script>
+    <link rel="stylesheet" crossorigin href="/discowurd/assets/index-D9rpR_hQ.css">
+  </head>
+  <body>
+    <div class="app">
+      <header class="top-bar">
+        <div class="brand">
+          <div class="brand-icon">
+            <img src="/discowurd/assets/favicon-C0Svzzlt.svg" alt="discOwUrd" width="40" height="40" />
+          </div>
+          <div>
+            <h1 class="brand-name">Disc<span class="brand-owu">OwU</span>rd</h1>
+            <p data-i18n="app.subtitle">Markdown szöveg készítése Discordhoz</p>
+          </div>
+        </div>
+        <div class="top-bar-actions">
+          <div id="lang-selector-wrap"></div>
+          <div class="toolbar" id="toolbar"></div>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="editor-panel">
+          <div class="panel-header">
+            <span class="panel-title" data-i18n="panel.editor">Szerkesztő</span>
+            <div class="panel-header-actions">
+              <button type="button" class="btn-ghost" id="sample-text-btn" data-i18n-title="btn.sampleTextTitle">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+                <span data-i18n="btn.sampleText">Minta szöveg</span>
+              </button>
+              <button type="button" class="btn-ghost" id="glitch-btn" data-i18n-title="btn.glitchTitle">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
+                <span data-i18n="btn.glitch">Glitch</span>
+              </button>
+              <button type="button" class="btn-ghost" id="emoji-picker-btn" data-i18n-title="btn.emojisTitle">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                  <line x1="9" y1="9" x2="9.01" y2="9" />
+                  <line x1="15" y1="9" x2="15.01" y2="9" />
+                </svg>
+                <span data-i18n="btn.emojis">Emojik</span>
+              </button>
+            </div>
+          </div>
+          <div class="editor-wrap">
+            <textarea
+              id="editor"
+              data-i18n-placeholder="editor.placeholder"
+              placeholder="Írd ide a szöveget… Kijelöléskor megjelenik a formázó menü."
+              spellcheck="false"
+            ></textarea>
+            <div class="selection-popup hidden" id="selection-popup"></div>
+          </div>
+          <div class="editor-actions">
+            <button type="button" class="btn-primary" id="copy-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              <span data-i18n="btn.copyText">Copy Text</span>
+            </button>
+            <span class="copy-feedback hidden" id="copy-feedback">Copied!</span>
+          </div>
+        </section>
+
+        <section class="preview-panel">
+          <div class="panel-header">
+            <span class="panel-title" data-i18n="panel.preview">Előnézet</span>
+          </div>
+          <div class="preview-content" id="preview"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal hidden" id="emoji-modal">
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-content emoji-modal">
+        <div class="modal-header">
+          <h2 data-i18n="modal.emojis">Emojik</h2>
+          <button type="button" class="btn-icon" data-close data-i18n-aria="modal.close" aria-label="Bezárás">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div class="emoji-upload">
+          <div class="emoji-field">
+            <label for="emoji-name" data-i18n="emoji.name">Emoji neve</label>
+            <input
+              type="text"
+              id="emoji-name"
+              data-i18n-placeholder="emoji.namePlaceholder"
+              placeholder="pl. yesyesyes"
+              spellcheck="false"
+              autocomplete="off"
+            />
+            <small data-i18n-html="emoji.nameHint">Discordban így jelenik meg: <code>:név:</code></small>
+          </div>
+          <label class="upload-zone" id="upload-zone">
+            <input type="file" id="emoji-upload" accept="image/webp" hidden />
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            <span data-i18n="emoji.upload">WebP emoji feltöltése</span>
+            <small data-i18n="emoji.uploadHint">Ha üres a név mező, a fájlnév lesz javaslatként kitöltve</small>
+          </label>
+          <div class="emoji-link-row">
+            <div class="emoji-link-field">
+              <label for="emoji-link" data-i18n="emoji.link">Emoji link</label>
+              <input
+                type="url"
+                id="emoji-link"
+                data-i18n-placeholder="emoji.linkPlaceholder"
+                placeholder="https://example.com/emoji.webp"
+                spellcheck="false"
+              />
+            </div>
+            <button type="button" class="btn-primary emoji-save-btn" id="emoji-link-save" data-i18n="emoji.save">Mentés</button>
+          </div>
+          <small class="emoji-link-hint" data-i18n="emoji.linkHint">Link megadásakor a Mentés gomb letölti és elmenti az emojit.</small>
+        </div>
+        <div class="emoji-grid" id="emoji-grid"></div>
+        <p class="emoji-empty hidden" id="emoji-empty" data-i18n="emoji.empty">Még nincs emoji. Tölts fel egy .webp fájlt vagy ments egyet linkről!</p>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="glitch-modal">
+      <div class="modal-backdrop" data-glitch-close></div>
+      <div class="modal-content glitch-modal">
+        <div class="modal-header">
+          <h2 data-i18n="modal.glitch">Glitch szöveg</h2>
+          <button type="button" class="btn-icon" data-glitch-close data-i18n-aria="modal.close" aria-label="Bezárás">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div class="glitch-body">
+          <p class="glitch-desc" data-i18n="glitch.description">
+            Unicode diakritikus jeleket ad a szöveghez – Discordba is bemásolható zalgo effekt.
+          </p>
+          <div class="glitch-field">
+            <label data-i18n="glitch.intensity">Intenzitás</label>
+            <div class="glitch-levels" id="glitch-levels"></div>
+          </div>
+          <div class="glitch-field">
+            <label for="glitch-preview-input" data-i18n="glitch.previewInput">Minta szöveg</label>
+            <input
+              type="text"
+              id="glitch-preview-input"
+              data-i18n-placeholder="glitch.previewPlaceholder"
+              spellcheck="false"
+            />
+          </div>
+          <div class="glitch-field">
+            <label data-i18n="glitch.preview">Előnézet</label>
+            <div class="glitch-preview-box" id="glitch-preview-output"></div>
+          </div>
+          <div class="glitch-actions">
+            <button type="button" class="btn-ghost" id="glitch-regenerate" data-i18n="glitch.regenerate">Újragenerálás</button>
+            <button type="button" class="btn-primary" id="glitch-apply-selection" data-i18n="glitch.applySelection">Alkalmazás kijelölésre</button>
+            <button type="button" class="btn-primary" id="glitch-apply-all" data-i18n="glitch.applyAll">Alkalmazás az egész szövegre</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
