@@ -53,9 +53,18 @@ Emojis are stored in your browser only (IndexedDB); they are not uploaded to any
 
 ## Deploy to GitHub Pages
 
-This repo includes a GitHub Actions workflow that deploys to Pages on every push to `main`. Enable **Settings → Pages → Source: GitHub Actions**, then push to `main`.
+On every push to `main`, GitHub Actions builds the app and publishes the `dist/` folder to the `gh-pages` branch.
 
-The app is built with `base: '/discowurd/'` for hosting at `https://<username>.github.io/discowurd/`.
+**One-time setup:**
+
+1. Open **Settings → Pages**
+2. Under **Build and deployment → Source**, choose **Deploy from a branch**
+3. Set **Branch** to `gh-pages` and folder to `/ (root)`
+4. Save — the site will be live at `https://<username>.github.io/discowurd/`
+
+If the page looks unstyled, the Pages source is likely pointing at `main` instead of `gh-pages`. Switch it as above and wait ~1 minute.
+
+The production build uses `base: '/discowurd/'` for project-page hosting.
 
 ## Contributing
 

@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   root: '.',
-  base: '/discowurd/',
-});
+  base: mode === 'production' ? '/discowurd/' : '/',
+}));
