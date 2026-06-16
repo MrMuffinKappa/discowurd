@@ -39,11 +39,20 @@ jobs:
           grep -q '/discowurd/assets/' dist/index.html
           ! grep -q '/src/styles.css' dist/index.html
 
+      - name: Add .nojekyll
+        run: touch dist/.nojekyll
+
+      - name: Deploy to gh-pages branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
+          single-commit: true
+
       - name: Copy build to docs
         run: |
           rm -rf docs
           cp -r dist docs
-          touch docs/.nojekyll
 
       - name: Commit docs folder
         uses: stefanzweifel/git-auto-commit-action@v5
